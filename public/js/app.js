@@ -4,6 +4,7 @@ var Timer = {
   secondsLeft: 5,
   isOnBreak: false,
   numberOfBreaks: 0,
+  numberOfRounds: 0,
   descriptionTxt: "",
   init: function(){
     this.cacheDom();
@@ -15,11 +16,13 @@ var Timer = {
     this.seconds = document.querySelector("#seconds");
     this.startButton = document.querySelector("#start");
     this.description = document.querySelector("#description");
+    this.rounds = document.querySelector("#rounds");
   },
   render: function(){
     this.minutes.textContent = this.pad(this.minutesLeft);
     this.seconds.textContent = this.pad(this.secondsLeft);
     this.description.textContent = this.descriptionTxt;
+    this.rounds.textContent = this.numberOfRounds;
   },
   addListeners: function(){
     // the bind statement takes the meaning of this from addListeners and pushes
@@ -47,6 +50,7 @@ var Timer = {
       // so set it to the opposite of itself
       this.isOnBreak = !this.isOnBreak;
       if (this.isOnBreak){
+        this.numberOfRounds += 1;
         alertify.alert("Pomodoro Timer", "Time is up! Time for a break!", this.audio.play());
       } else {
         alertify.alert("Pomodoro Timer", "Time is up! Let's get to work!", this.audio.play());
