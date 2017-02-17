@@ -1,4 +1,5 @@
 var Timer = {
+  audio: new Audio('audio/beep.mp3'),
   minutesLeft: 0,
   secondsLeft: 5,
   isOnBreak: false,
@@ -45,6 +46,11 @@ var Timer = {
       // switches between being on break and not being on break each time,
       // so set it to the opposite of itself
       this.isOnBreak = !this.isOnBreak;
+      if (this.isOnBreak){
+        alertify.alert("Pomodoro Timer", "Time is up! Time for a break!", this.audio.play());
+      } else {
+        alertify.alert("Pomodoro Timer", "Time is up! Let's get to work!", this.audio.play());
+      }
       this.render();
       return;
     }
