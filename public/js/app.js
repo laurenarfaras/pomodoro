@@ -1,7 +1,7 @@
 // data and variable declarations
 var timer;
-var minutesLeft = 25;
-var secondsLeft = 0;
+var minutesLeft = 0;
+var secondsLeft = 5;
 var isOnBreak = false;
 var numberOfBreaks = 0;
 // getting references to the dom
@@ -14,17 +14,35 @@ var startButton = document.querySelector("#start");
   render();
 // function definitions
 function start(){
+  console.log(timer);
   if (!timer){
     timer = setInterval(tick, 1000);
   }
 }
 function tick(){
+  // when timer has finished and is at 00:00
+  if (secondsLeft === 0 && minutesLeft === 0) {
+    // clear the timer
+    clearInterval(timer);
+    timer = !timer; // dereference
+    if (isOnBreak){
+      numberOfBreaks += 1;
+      resetWorkTime();
+    } else {
+      resetBreakTime();
+    }
+    // switches between being on break and not being on break each time,
+    // so set it to the opposite of itself
+    isOnBreak = !isOnBreak;
+    render();
+    return;
+  }
   decrementMinutes();
   decrementSeconds();
   render();
 }
 function decrementMinutes(){
-  if (minutesLeft > 0 && secondsLeft === 0) {
+  if (secondsLeft === 0) {
     minutesLeft -= 1;
   }
 }
@@ -45,4 +63,21 @@ function pad(num){
   } else {
     return num;
   }
+}
+function resetWorkTime(){
+  minutesLeft = 0;
+  secondsLeft = 5;
+}
+function resetBreakTime(){
+  // 3%3 = 0
+  // 6%3 = 0
+  // so each long break should be when numberOfBreaks%3 = 0
+  if (numberOfBreaks < 3) {
+    minutesLeft = 5;
+  } else {
+    minutesLeft = 15;
+    numberOfBreaks = 0;
+  }
+  secondsLeft = 0;
+
 }
