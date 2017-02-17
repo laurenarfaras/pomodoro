@@ -3,6 +3,7 @@ var Timer = {
   secondsLeft: 5,
   isOnBreak: false,
   numberOfBreaks: 0,
+  descriptionTxt: "",
   init: function(){
     this.cacheDom();
     this.addListeners();
@@ -12,10 +13,12 @@ var Timer = {
     this.minutes = document.querySelector("#minutes");
     this.seconds = document.querySelector("#seconds");
     this.startButton = document.querySelector("#start");
+    this.description = document.querySelector("#description");
   },
   render: function(){
     this.minutes.textContent = this.pad(this.minutesLeft);
     this.seconds.textContent = this.pad(this.secondsLeft);
+    this.description.textContent = this.descriptionTxt;
   },
   addListeners: function(){
     // the bind statement takes the meaning of this from addListeners and pushes
@@ -71,18 +74,23 @@ var Timer = {
   resetWorkTime: function(){
     this.minutesLeft = 0;
     this.secondsLeft = 5;
+    this.descriptionTxt = "";
   },
   resetBreakTime: function(){
     // 3%3 = 0
     // 6%3 = 0
     // so each long break should be when numberOfBreaks%3 = 0
     if (this.numberOfBreaks < 3) {
-      this.minutesLeft = 5;
+      this.minutesLeft = 0;
+      this.secondsLeft = 2;
+      this.descriptionTxt = "short break";
     } else {
-      this.minutesLeft = 15;
+      this.minutesLeft = 0;
+      this.secondsLeft = 3;
       this.numberOfBreaks = 0;
+      this.descriptionTxt = "long break";
     }
-    this.secondsLeft = 0;
+    //this.secondsLeft = 0;
   }
 };
 
