@@ -5,7 +5,7 @@ var Timer = {
   isOnBreak: false,
   numberOfBreaks: 0,
   numberOfRounds: 0,
-  descriptionTxt: "",
+  descriptionTxt: "werkk",
   init: function(){
     this.cacheDom();
     this.addListeners();
@@ -22,7 +22,7 @@ var Timer = {
     this.minutes.textContent = this.pad(this.minutesLeft);
     this.seconds.textContent = this.pad(this.secondsLeft);
     this.description.textContent = this.descriptionTxt;
-    this.rounds.textContent = this.numberOfRounds;
+    this.rounds.textContent = "intervals: " + this.numberOfRounds;
   },
   addListeners: function(){
     // the bind statement takes the meaning of this from addListeners and pushes
@@ -84,7 +84,7 @@ var Timer = {
   resetWorkTime: function(){
     this.minutesLeft = 0;
     this.secondsLeft = 5;
-    this.descriptionTxt = "";
+    this.descriptionTxt = "werkk";
   },
   resetBreakTime: function(){
     // 3%3 = 0
