@@ -35,3 +35,6 @@ body {
 #rounds {
   padding: 2em;
 }
+#progress-bar {
+  background-color: rgb(153, 194, 162);
+}

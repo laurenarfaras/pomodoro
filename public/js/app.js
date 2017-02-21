@@ -5,7 +5,10 @@ var Timer = {
   isOnBreak: false,
   numberOfBreaks: 0,
   numberOfRounds: 0,
-  descriptionTxt: "werkk",
+  descriptionTxt: "werk",
+  progressValue: 0,
+  totalMinutes: 0,
+  totalSeconds: 5,
   init: function(){
     this.cacheDom();
     this.addListeners();
@@ -23,6 +26,7 @@ var Timer = {
     this.seconds.textContent = this.pad(this.secondsLeft);
     this.description.textContent = this.descriptionTxt;
     this.rounds.textContent = "intervals: " + this.numberOfRounds;
+    document.querySelector("#progress-bar").style.width = this.progressValue + "%";
   },
   addListeners: function(){
     // the bind statement takes the meaning of this from addListeners and pushes
@@ -46,6 +50,8 @@ var Timer = {
       } else {
         this.resetBreakTime();
       }
+      this.totalMinutes = this.minutesLeft;
+      this.totalSeconds = this.secondsLeft;
       // switches between being on break and not being on break each time,
       // so set it to the opposite of itself
       this.isOnBreak = !this.isOnBreak;
@@ -60,6 +66,7 @@ var Timer = {
     }
     this.decrementMinutes();
     this.decrementSeconds();
+    this.updateBar();
     this.render();
   },
   decrementMinutes: function(){
@@ -73,6 +80,9 @@ var Timer = {
     } else {
       this.secondsLeft -= 1;
     }
+  },
+  updateBar: function(){
+    this.progressValue = (1 - (((this.minutesLeft * 60) + this.secondsLeft) / ((this.totalMinutes * 60) + this.totalSeconds))) * 100;
   },
   pad: function(num){
     if (num < 10){
